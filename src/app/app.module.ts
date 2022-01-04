@@ -13,13 +13,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 
-import { EditorComponent } from './editor/editor.component';
-
 @NgModule({
   declarations: [
     AppComponent,
     NoteComponent,
-    EditorComponent
   ],
   imports: [
     BrowserModule,

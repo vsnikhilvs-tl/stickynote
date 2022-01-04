@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-import { EditorComponent } from '../editor/editor.component';
 
 @Component({
   selector: 'app-note',
@@ -17,31 +16,9 @@ export class NoteComponent implements OnInit {
   currentNote: number = 0;
   
   constructor(
-    public dialog: MatDialog,
-    public dialogRef: MatDialogRef<EditorComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
   ngOnInit(): void {
-  }
-
-  openQuill() {
-    const dialogRef = this.dialog.open(EditorComponent, {
-      width: '450px',
-      height: 'auto'
-    });
-    dialogRef.afterClosed().subscribe(
-      (res) => {
-        console.log(res);
-        this.notes.push({
-          id: Math.floor(Date.now() / 1000),
-          description: res,
-          update: false
-        })
-      }, (err) => {
-        console.log(err);
-      }
-    );
   }
 
   contentChanged(quillEvent: any) {
