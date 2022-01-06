@@ -1,15 +1,31 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterTestingModule } from '@angular/router/testing';
+import { QuillModule } from 'ngx-quill';
 import { AppComponent } from './app.component';
+import { NoteComponent } from './note/note.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        FormsModule,
+        QuillModule.forRoot(),
+        MatButtonModule,
+        MatDialogModule,
+        MatCardModule,
+        DragDropModule,
+        MatTooltipModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        NoteComponent
       ],
     }).compileComponents();
   });
@@ -26,10 +42,4 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('stickynote');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('stickynote app is running!');
-  });
 });

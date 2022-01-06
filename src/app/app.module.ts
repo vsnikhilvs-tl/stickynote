@@ -12,6 +12,8 @@ import { QuillModule } from 'ngx-quill'
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import {MatCardModule} from '@angular/material/card';
     QuillModule.forRoot(),
     MatButtonModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    DragDropModule,
+    MatTooltipModule
   ],
   providers: [
     {provide:MatDialogRef , useValue:{} },

@@ -10,7 +10,79 @@
 }
 
 ::ng-deep .example-card {
+    position: absolute !important;
     display: flex !important;
     flex-direction: column;
     justify-content: space-between;
+    padding-top: 2.5rem !important;
+    padding-bottom: 0.5rem !important;
+    resize: both;
+    overflow: auto;
+
+    mat-card-actions {
+        margin-bottom: 0 !important;
+    }
+}
+
+::ng-deep .ql-snow .ql-stroke {
+    stroke: white !important;
+}
+
+::ng-deep .ql-editor {
+    font-family: 'Raleway', sans-serif !important;
+}
+
+::ng-deep .ql-editor.ql-blank::before {
+    color: white;
+    content: "Add note here";
+    font-style: normal;
+}
+
+::ng-deep .displayedValue ol {
+    list-style-type: decimal !important;
+}
+
+::ng-deep .displayedValue ul li {
+    list-style-type: circle !important;
+    list-style-position: inside !important;
+}
+
+::ng-deep .displayedValue ol li {
+    list-style-position: inside !important;
+}
+
+.example-handle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #ccc;
+    cursor: move;
+    width: 24px;
+    height: 24px;
+}
+
+::ng-deep input:focus-visible {
+    outline: none !important;
+}
+
+::ng-deep .mat-card-actions .mat-button, .mat-card-actions .mat-raised-button, .mat-card-actions .mat-stroked-button {
+    margin: 0 !important;
+}
+
+::ng-deep .mat-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button {
+    padding: 0 8px !important;
+    min-width: 0 !important;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    overflow-y: scroll;
+    background: grey;
+    box-shadow: inset 0 0 4px #707070;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #434B58;
+    border-radius: 10px;
 }

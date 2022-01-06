@@ -13,9 +13,13 @@
 body {
     margin: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
 }
 
 .cdk-overlay-pane {
     max-width: 100vw !important;
+}
+
+.raleway {
+    font-family: 'Raleway', sans-serif;
 }

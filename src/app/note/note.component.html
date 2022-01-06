@@ -1,10 +1,50 @@
-<div class="main m-2 mx-20">
-    <div class="grid grid-flow-row grid-cols-4 gap-2">
-        <mat-card class="example-card" *ngFor="let note of notes" style="max-height: 200px;">
-            <div>
-                <mat-card-title>Note #{{ note?.id }}</mat-card-title>
-                <mat-card-content class="existing">
-                    <p *ngIf="!note.update" [innerHTML]="note.description"></p>
+<div class="main m-2 mx-20 h-[100%]">
+    <div class="boundary relative h-[100%]">
+
+        <mat-card class="bg-[#27303F] text-white" style="width: 250px;">
+            <mat-card-title>
+                <input id="titleInput" class="bg-[#ffffff21] px-2 raleway font-medium" [(ngModel)]="currentTitle" placeholder="Add Title here" style="width: -webkit-fill-available;" />
+            </mat-card-title>
+            <div class="overflow-y-auto max-h-[75%]">
+                <mat-card-content>
+                    <quill-editor id="editor" (onContentChanged)="contentChanged($event)">
+                        <div quill-editor-toolbar>
+                            <span class="ql-formats">
+                                <button class="ql-bold" [title]="'Bold'"></button>
+                                <button class="ql-italic" [title]="'Italic'"></button>
+                                <button class="ql-underline" [title]="'Underline'"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button class="ql-list" value="ordered" [title]="'Ordered'"></button>
+                                <button class="ql-list" value="bullet" [title]="'Bullet'"></button>
+                            </span>
+                        </div>
+                    </quill-editor>
+                </mat-card-content>
+            </div>
+            <mat-card-actions>
+                <button id="cancelCreate" *ngIf="newNote" mat-button (click)="clearEditor()" matTooltip="Cancel">
+                    <span class="material-icons">
+                        cancel
+                    </span>
+                </button>
+                <button id="addCreate" mat-button (click)="create()" matTooltip="Add Note">
+                    <span class="material-icons">
+                        add
+                    </span>
+                </button>
+              </mat-card-actions>
+        </mat-card>
+
+        <mat-card class="example-card bg-[#27303F] text-white" *ngFor="let note of notes" style="min-height: 250px; width: 250px; min-width: 200px"
+        cdkDragBoundary=".boundary" cdkDrag  [cdkDragFreeDragPosition]="dragPosition">
+            <mat-card-title>
+                <span class="raleway font-medium" *ngIf="!note.update">{{ note?.title }}</span>
+                <input class="bg-[#ffffff21] px-2 raleway font-medium" *ngIf="note.update" value="{{ note?.title }}" (blur)="changeTitle($event, note.id)" style="width: -webkit-fill-available;" />
+            </mat-card-title>
+            <div class="overflow-y-auto max-h-[75%] overflow-x-hidden break-all">
+                <mat-card-content>
+                    <div class="displayedValue raleway font-light" *ngIf="!note.update" [innerHTML]="note.description"></div>
                     <quill-editor *ngIf="note.update" id="editor" [(ngModel)]="note.description" (onContentChanged)="updateNote($event, note.id)">
                         <div quill-editor-toolbar>
                             <span class="ql-formats">
@@ -21,58 +61,34 @@
                 </mat-card-content>
             </div>
             <mat-card-actions>
-                <button *ngIf="note.update" mat-button (click)="clearEditor()">
+                <button *ngIf="note.update" mat-button (click)="cancelEdit(note.id)" matTooltip="Cancel">
                     <span class="material-icons">
                         cancel
                     </span>
                 </button>
-                <button *ngIf="note.update" mat-button (click)="finishUpdateNote()">
+                <button *ngIf="note.update" mat-button (click)="finishUpdateNote()" matTooltip="Update Note">
                     <span class="material-icons">
                         update
                     </span>
                 </button>
-                <button *ngIf="!note.update" mat-button (click)="deleteNote(note.id)">
+                <button id="deleteOne" *ngIf="!note.update" mat-button (click)="deleteNote(note.id)" matTooltip="Delete Note">
                     <span class="material-icons">
                         delete
                     </span>
                 </button>
-                <button *ngIf="!note.update" mat-button (click)="note.update=true;">
+                <button id="editOne" *ngIf="!note.update" mat-button (click)="note.update=true;originalNote=note.description;" matTooltip="Edit Note">
                     <span class="material-icons">
                         edit
                     </span>
                 </button>
-              </mat-card-actions>
+            </mat-card-actions>
+            <div class="example-handle" cdkDragHandle>
+                <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+                  <path d="M0 0h24v24H0z" fill="none"></path>
+                </svg>
+            </div>
         </mat-card>
         
-        <mat-card style="max-height: 200px;">
-            <mat-card-title>Add Note</mat-card-title>
-            <mat-card-content>
-                <quill-editor id="editor" (onContentChanged)="contentChanged($event)">
-                    <div quill-editor-toolbar>
-                        <span class="ql-formats">
-                            <button class="ql-bold" [title]="'Bold'"></button>
-                            <button class="ql-italic" [title]="'Italic'"></button>
-                            <button class="ql-underline" [title]="'Underline'"></button>
-                        </span>
-                        <span class="ql-formats">
-                            <button class="ql-list" value="ordered" [title]="'Ordered'"></button>
-                            <button class="ql-list" value="bullet" [title]="'Bullet'"></button>
-                        </span>
-                    </div>
-                </quill-editor>
-            </mat-card-content>
-            <mat-card-actions>
-                <button *ngIf="newNote" mat-button (click)="clearEditor()">
-                    <span class="material-icons">
-                        cancel
-                    </span>
-                </button>
-                <button mat-button (click)="create()">
-                    <span class="material-icons">
-                        add
-                    </span>
-                </button>
-              </mat-card-actions>
-        </mat-card>
     </div>
 </div>
